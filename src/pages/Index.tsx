@@ -10,13 +10,10 @@ import { useToast } from '@/hooks/use-toast';
 const Index = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
-    company: '',
+    name: '',
     inn: '',
-    revenue: '',
-    marketplaces: '',
     phone: '',
-    email: '',
-    comment: ''
+    email: ''
   });
 
   const [stats, setStats] = useState({ clients: 0, amount: 0, approvals: 0 });
@@ -144,7 +141,7 @@ const Index = () => {
           title: 'Заявка отправлена!',
           description: 'Мы свяжемся с вами в течение 24 часов'
         });
-        setFormData({ company: '', inn: '', revenue: '', marketplaces: '', phone: '', email: '', comment: '' });
+        setFormData({ name: '', inn: '', phone: '', email: '' });
       } else {
         toast({
           title: 'Ошибка',
@@ -454,6 +451,93 @@ const Index = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Application Form Section */}
+      <section id="application-form" className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+                Оставьте заявку
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Заполните форму, и мы свяжемся с вами в течение 15 минут
+              </p>
+            </div>
+            <Card className="border-border shadow-xl">
+              <CardContent className="p-8">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-foreground font-medium">
+                      ФИО или Название компании <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="name"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="Иванов Иван Иванович / ООО «Ваша компания»"
+                      className="h-12"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="inn" className="text-foreground font-medium">
+                      ИНН <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="inn"
+                      required
+                      value={formData.inn}
+                      onChange={(e) => setFormData({ ...formData, inn: e.target.value })}
+                      placeholder="1234567890"
+                      className="h-12"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="text-foreground font-medium">
+                      Телефон <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      placeholder="+7 (999) 123-45-67"
+                      className="h-12"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-foreground font-medium">
+                      Email <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="info@company.ru"
+                      className="h-12"
+                    />
+                  </div>
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full h-14 text-lg bg-accent hover:bg-accent/90 shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    Отправить заявку
+                    <Icon name="Send" className="ml-2" size={20} />
+                  </Button>
+                  <p className="text-sm text-muted-foreground text-center mt-4">
+                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                  </p>
+                </form>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
