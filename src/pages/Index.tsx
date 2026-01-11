@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -18,6 +18,51 @@ const Index = () => {
     email: '',
     comment: ''
   });
+
+  const [stats, setStats] = useState({ clients: 0, amount: 0, approvals: 0 });
+  const statsRef = useRef<HTMLDivElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          animateStats();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated]);
+
+  const animateStats = () => {
+    const duration = 2000;
+    const steps = 60;
+    const targets = { clients: 450, amount: 2.5, approvals: 95 };
+    
+    let step = 0;
+    const interval = setInterval(() => {
+      step++;
+      const progress = step / steps;
+      
+      setStats({
+        clients: Math.floor(targets.clients * progress),
+        amount: parseFloat((targets.amount * progress).toFixed(1)),
+        approvals: Math.floor(targets.approvals * progress)
+      });
+
+      if (step >= steps) {
+        clearInterval(interval);
+        setStats(targets);
+      }
+    }, duration / steps);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,6 +162,35 @@ const Index = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section ref={statsRef} className="py-16 bg-gradient-to-br from-accent/10 to-accent/5">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Icon name="Users" className="text-accent mr-2" size={32} />
+                <div className="text-5xl font-bold text-foreground">{stats.clients}+</div>
+              </div>
+              <p className="text-muted-foreground text-lg">Довольных клиентов</p>
+            </div>
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Icon name="DollarSign" className="text-accent mr-2" size={32} />
+                <div className="text-5xl font-bold text-foreground">{stats.amount} млрд ₽</div>
+              </div>
+              <p className="text-muted-foreground text-lg">Выдано финансирования</p>
+            </div>
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Icon name="CheckCircle" className="text-accent mr-2" size={32} />
+                <div className="text-5xl font-bold text-foreground">{stats.approvals}%</div>
+              </div>
+              <p className="text-muted-foreground text-lg">Одобрение заявок</p>
+            </div>
           </div>
         </div>
       </section>
