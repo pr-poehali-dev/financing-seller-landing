@@ -16,6 +16,8 @@ const Index = () => {
     phone: '',
     email: ''
   });
+  
+  const [emailError, setEmailError] = useState('');
 
   const [stats, setStats] = useState({ clients: 0, amount: 0, approvals: 0 });
   const statsRef = useRef<HTMLDivElement>(null);
@@ -123,8 +125,27 @@ const Index = () => {
     }, duration / steps);
   };
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (email: string) => {
+    setFormData({ ...formData, email });
+    if (email && !validateEmail(email)) {
+      setEmailError('Введите корректный email адрес');
+    } else {
+      setEmailError('');
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateEmail(formData.email)) {
+      setEmailError('Введите корректный email адрес');
+      return;
+    }
     
     try {
       const response = await fetch('https://functions.poehali.dev/44df7ed9-6f31-4765-b300-5e98aaf8afc6', {
@@ -531,10 +552,16 @@ const Index = () => {
                       type="email"
                       required
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) => handleEmailChange(e.target.value)}
                       placeholder="info@company.ru"
-                      className="h-12"
+                      className={`h-12 ${emailError ? 'border-destructive' : ''}`}
                     />
+                    {emailError && (
+                      <p className="text-sm text-destructive flex items-center gap-1">
+                        <Icon name="AlertCircle" size={14} />
+                        {emailError}
+                      </p>
+                    )}
                   </div>
                   <Button 
                     type="submit" 
