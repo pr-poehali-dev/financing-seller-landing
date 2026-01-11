@@ -22,6 +22,8 @@ const Index = () => {
   const [stats, setStats] = useState({ clients: 0, amount: 0, approvals: 0 });
   const statsRef = useRef<HTMLDivElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
+  
+  const [timer, setTimer] = useState({ hours: 2, minutes: 30, seconds: 0 });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -40,6 +42,33 @@ const Index = () => {
 
     return () => observer.disconnect();
   }, [hasAnimated]);
+
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimer((prev) => {
+        let { hours, minutes, seconds } = prev;
+        
+        if (seconds > 0) {
+          seconds--;
+        } else if (minutes > 0) {
+          minutes--;
+          seconds = 59;
+        } else if (hours > 0) {
+          hours--;
+          minutes = 59;
+          seconds = 59;
+        } else {
+          hours = 2;
+          minutes = 30;
+          seconds = 0;
+        }
+        
+        return { hours, minutes, seconds };
+      });
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, []);
 
   const animateStats = () => {
     const duration = 2000;
@@ -125,6 +154,42 @@ const Index = () => {
             <p className="text-xl md:text-2xl mb-8 text-primary-foreground/90 font-medium">
               Получите оборотный капитал до 50 млн ₽ за 15 минут без залога и личных гарантий
             </p>
+            
+            {/* Timer */}
+            <div className="bg-secondary/20 backdrop-blur-sm border-2 border-secondary rounded-2xl p-6 mb-8 max-w-xl">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Icon name="Clock" className="text-secondary" size={24} />
+                  <span className="text-lg font-semibold text-primary-foreground">Специальное предложение истекает через:</span>
+                </div>
+              </div>
+              <div className="flex gap-4 justify-center">
+                <div className="text-center">
+                  <div className="bg-primary-foreground text-primary rounded-xl px-4 py-3 min-w-[70px] font-bold text-3xl">
+                    {String(timer.hours).padStart(2, '0')}
+                  </div>
+                  <div className="text-sm text-primary-foreground/80 mt-2">часов</div>
+                </div>
+                <div className="text-4xl font-bold text-primary-foreground flex items-center">:</div>
+                <div className="text-center">
+                  <div className="bg-primary-foreground text-primary rounded-xl px-4 py-3 min-w-[70px] font-bold text-3xl">
+                    {String(timer.minutes).padStart(2, '0')}
+                  </div>
+                  <div className="text-sm text-primary-foreground/80 mt-2">минут</div>
+                </div>
+                <div className="text-4xl font-bold text-primary-foreground flex items-center">:</div>
+                <div className="text-center">
+                  <div className="bg-primary-foreground text-primary rounded-xl px-4 py-3 min-w-[70px] font-bold text-3xl">
+                    {String(timer.seconds).padStart(2, '0')}
+                  </div>
+                  <div className="text-sm text-primary-foreground/80 mt-2">секунд</div>
+                </div>
+              </div>
+              <p className="text-center text-primary-foreground/80 text-sm mt-4">
+                Подайте заявку сейчас и получите ускоренное рассмотрение!
+              </p>
+            </div>
+            
             <Button 
               size="lg" 
               onClick={scrollToForm}
