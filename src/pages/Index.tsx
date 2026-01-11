@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import InputMask from 'react-input-mask';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -500,15 +501,22 @@ const Index = () => {
                     <Label htmlFor="phone" className="text-foreground font-medium">
                       Телефон <span className="text-destructive">*</span>
                     </Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      required
+                    <InputMask
+                      mask="+7 (999) 999-99-99"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+7 (999) 123-45-67"
-                      className="h-12"
-                    />
+                    >
+                      {(inputProps: any) => (
+                        <Input
+                          {...inputProps}
+                          id="phone"
+                          type="tel"
+                          required
+                          placeholder="+7 (999) 123-45-67"
+                          className="h-12"
+                        />
+                      )}
+                    </InputMask>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-foreground font-medium">
