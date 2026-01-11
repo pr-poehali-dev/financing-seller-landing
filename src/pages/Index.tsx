@@ -24,6 +24,19 @@ const Index = () => {
   const [hasAnimated, setHasAnimated] = useState(false);
   
   const [timer, setTimer] = useState({ hours: 2, minutes: 30, seconds: 0 });
+  const [notification, setNotification] = useState<{ show: boolean; name: string; amount: string }>({ 
+    show: false, 
+    name: '', 
+    amount: '' 
+  });
+
+  const notifications = [
+    { name: 'ООО "ТекстильПро"', amount: '3 млн ₽', city: 'Москва' },
+    { name: 'ИП Соколова А.В.', amount: '1.5 млн ₽', city: 'Санкт-Петербург' },
+    { name: 'ООО "МаркетСтар"', amount: '5 млн ₽', city: 'Екатеринбург' },
+    { name: 'ИП Морозов В.С.', amount: '2.8 млн ₽', city: 'Казань' },
+    { name: 'ООО "ЭлектроТрейд"', amount: '4.2 млн ₽', city: 'Новосибирск' }
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -68,6 +81,25 @@ const Index = () => {
     }, 1000);
 
     return () => clearInterval(countdown);
+  }, []);
+
+  useEffect(() => {
+    const showNotification = () => {
+      const randomNotif = notifications[Math.floor(Math.random() * notifications.length)];
+      setNotification({ show: true, name: randomNotif.name, amount: randomNotif.amount });
+      
+      setTimeout(() => {
+        setNotification({ show: false, name: '', amount: '' });
+      }, 5000);
+    };
+
+    const initialDelay = setTimeout(() => {
+      showNotification();
+      const interval = setInterval(showNotification, 15000);
+      return () => clearInterval(interval);
+    }, 3000);
+
+    return () => clearTimeout(initialDelay);
   }, []);
 
   const animateStats = () => {
@@ -134,7 +166,35 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Notification Popup */}
+      {notification.show && (
+        <div className="fixed bottom-8 left-8 z-50 animate-slide-in-left">
+          <Card className="border-accent shadow-2xl max-w-sm bg-background/95 backdrop-blur">
+            <CardContent className="p-4">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Icon name="CheckCircle" className="text-accent" size={24} />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Icon name="TrendingUp" size={16} className="text-accent" />
+                    <span className="text-xs font-semibold text-accent">Заявка одобрена</span>
+                  </div>
+                  <p className="text-sm font-semibold text-foreground mb-1">{notification.name}</p>
+                  <p className="text-xs text-muted-foreground">
+                    Получил финансирование <span className="font-bold text-accent">{notification.amount}</span>
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                    <Icon name="Clock" size={12} />
+                    Только что
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:32px_32px]" />
