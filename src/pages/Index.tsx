@@ -41,7 +41,7 @@ const Index = () => {
               Финансирование для селлеров маркетплейсов
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-primary-foreground/90 font-medium">
-              Получите оборотный капитал до 50 млн ₽ за 48 часов без залога и личных гарантий
+              Получите оборотный капитал до 50 млн ₽ за 15 минут без залога и личных гарантий
             </p>
             <Button 
               size="lg" 
@@ -63,7 +63,7 @@ const Index = () => {
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: 'Zap', title: 'Быстрое решение', desc: 'Одобрение за 24 часа, финансирование за 48 часов' },
+              { icon: 'Zap', title: 'Быстрое решение', desc: 'Одобрение и финансирование за 15 минут' },
               { icon: 'Shield', title: 'Без залога', desc: 'Не требуем залог имущества и личные гарантии' },
               { icon: 'TrendingUp', title: 'До 50 млн ₽', desc: 'Лимиты от 500 тыс до 50 млн рублей' },
               { icon: 'Percent', title: 'От 1.5% в месяц', desc: 'Прозрачные условия без скрытых комиссий' },
@@ -99,11 +99,10 @@ const Index = () => {
                 <div className="space-y-6">
                   {[
                     { label: 'Тип бизнеса', value: 'Юридические лица и ИП, работающие на маркетплейсах' },
-                    { label: 'Минимальный оборот', value: 'От 3 млн рублей в месяц на маркетплейсах' },
-                    { label: 'Срок работы', value: 'Не менее 6 месяцев на маркетплейсах' },
+                    { label: 'Минимальный оборот', value: 'От 100 000 рублей в месяц на маркетплейсах' },
+                    { label: 'Срок работы', value: 'Не менее 3 месяцев на маркетплейсах' },
                     { label: 'Маркетплейсы', value: 'Wildberries, Ozon, Яндекс.Маркет, Мегамаркет' },
-                    { label: 'Документы', value: 'Выписка ЕГРЮЛ/ЕГРИП, доступ к личному кабинету маркетплейса' },
-                    { label: 'Кредитная история', value: 'Отсутствие просрочек более 30 дней за последние 12 месяцев' }
+                    { label: 'Документы', value: 'ИНН' }
                   ].map((item, idx) => (
                     <div key={idx} className="flex flex-col md:flex-row md:items-start gap-4 pb-6 border-b last:border-0 border-border">
                       <div className="md:w-1/3">
@@ -139,7 +138,7 @@ const Index = () => {
                 { num: '01', icon: 'FileText', title: 'Заполните заявку', desc: 'Оставьте заявку на сайте, укажите основную информацию о бизнесе' },
                 { num: '02', icon: 'Search', title: 'Анализ данных', desc: 'Мы проанализируем ваши продажи и кредитную историю за 24 часа' },
                 { num: '03', icon: 'ClipboardCheck', title: 'Одобрение', desc: 'Получите решение и подпишите договор онлайн' },
-                { num: '04', icon: 'Wallet', title: 'Получение средств', desc: 'Деньги поступят на счет в течение 48 часов после одобрения' }
+                { num: '04', icon: 'Wallet', title: 'Получение средств', desc: 'Деньги поступят на счет в течение 15 минут после одобрения' }
               ].map((step, idx) => (
                 <Card key={idx} className="relative border-border hover:border-accent transition-all duration-300 hover:shadow-lg">
                   <CardContent className="p-8">
