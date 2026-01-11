@@ -459,37 +459,9 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-primary text-primary-foreground py-12">
+      <footer className="bg-primary text-primary-foreground py-8">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">Финансирование селлеров</h3>
-              <p className="text-primary-foreground/80">
-                Профессиональное финансирование для бизнеса на маркетплейсах
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Контакты</h4>
-              <div className="space-y-2 text-primary-foreground/80">
-                <p className="flex items-center gap-2">
-                  <Icon name="Phone" size={16} />
-                  +7 (495) 123-45-67
-                </p>
-                <p className="flex items-center gap-2">
-                  <Icon name="Mail" size={16} />
-                  info@sellersfinance.ru
-                </p>
-              </div>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Режим работы</h4>
-              <p className="text-primary-foreground/80">
-                Пн-Пт: 9:00 - 20:00<br />
-                Сб-Вс: 10:00 - 18:00
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-primary-foreground/60 text-sm">
+          <div className="text-center text-primary-foreground/60 text-sm">
             © 2024 Финансирование селлеров. Все права защищены.
           </div>
         </div>
