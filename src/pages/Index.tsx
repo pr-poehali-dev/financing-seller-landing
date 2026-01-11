@@ -18,6 +18,7 @@ const Index = () => {
   });
   
   const [emailError, setEmailError] = useState('');
+  const [innError, setInnError] = useState('');
 
   const [stats, setStats] = useState({ clients: 0, amount: 0, approvals: 0 });
   const statsRef = useRef<HTMLDivElement>(null);
@@ -139,11 +140,29 @@ const Index = () => {
     }
   };
 
+  const validateInn = (inn: string) => {
+    return inn.length === 10 || inn.length === 12;
+  };
+
+  const handleInnChange = (inn: string) => {
+    setFormData({ ...formData, inn });
+    if (inn && !validateInn(inn)) {
+      setInnError('ИНН должен содержать 10 или 12 цифр');
+    } else {
+      setInnError('');
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateEmail(formData.email)) {
       setEmailError('Введите корректный email адрес');
+      return;
+    }
+    
+    if (!validateInn(formData.inn)) {
+      setInnError('ИНН должен содержать 10 или 12 цифр');
       return;
     }
     
@@ -515,12 +534,18 @@ const Index = () => {
                       value={formData.inn}
                       onChange={(e) => {
                         const value = e.target.value.replace(/\D/g, '').slice(0, 12);
-                        setFormData({ ...formData, inn: value });
+                        handleInnChange(value);
                       }}
                       placeholder="1234567890 (10 или 12 цифр)"
-                      className="h-12"
+                      className={`h-12 ${innError ? 'border-destructive' : ''}`}
                       maxLength={12}
                     />
+                    {innError && (
+                      <p className="text-sm text-destructive flex items-center gap-1">
+                        <Icon name="AlertCircle" size={14} />
+                        {innError}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone" className="text-foreground font-medium">
