@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "Valid application submission",
+      "method": "POST",
+      "body": {
+        "company": "ООО Тест",
+        "inn": "1234567890",
+        "revenue": "500000",
+        "marketplaces": "Wildberries, Ozon",
+        "phone": "+7 999 123-45-67",
+        "email": "test@example.com",
+        "comment": "Тестовая заявка"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Missing required fields",
+      "method": "POST",
+      "body": {
+        "company": "ООО Тест"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

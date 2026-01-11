@@ -19,13 +19,40 @@ const Index = () => {
     comment: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: 'Заявка отправлена!',
-      description: 'Мы свяжемся с вами в течение 24 часов'
-    });
-    setFormData({ company: '', inn: '', revenue: '', marketplaces: '', phone: '', email: '', comment: '' });
+    
+    try {
+      const response = await fetch('https://functions.poehali.dev/44df7ed9-6f31-4765-b300-5e98aaf8afc6', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        toast({
+          title: 'Заявка отправлена!',
+          description: 'Мы свяжемся с вами в течение 24 часов'
+        });
+        setFormData({ company: '', inn: '', revenue: '', marketplaces: '', phone: '', email: '', comment: '' });
+      } else {
+        toast({
+          title: 'Ошибка',
+          description: result.error || 'Не удалось отправить заявку',
+          variant: 'destructive'
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось отправить заявку. Проверьте соединение',
+        variant: 'destructive'
+      });
+    }
   };
 
   const scrollToForm = () => {
