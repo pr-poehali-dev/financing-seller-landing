@@ -492,9 +492,13 @@ const Index = () => {
                       id="inn"
                       required
                       value={formData.inn}
-                      onChange={(e) => setFormData({ ...formData, inn: e.target.value })}
-                      placeholder="1234567890"
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, '').slice(0, 12);
+                        setFormData({ ...formData, inn: value });
+                      }}
+                      placeholder="1234567890 (10 или 12 цифр)"
                       className="h-12"
+                      maxLength={12}
                     />
                   </div>
                   <div className="space-y-2">
