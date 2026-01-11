@@ -11,9 +11,11 @@ const Index = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     company: '',
+    inn: '',
     revenue: '',
     marketplaces: '',
     phone: '',
+    email: '',
     comment: ''
   });
 
@@ -23,7 +25,7 @@ const Index = () => {
       title: 'Заявка отправлена!',
       description: 'Мы свяжемся с вами в течение 24 часов'
     });
-    setFormData({ company: '', revenue: '', marketplaces: '', phone: '', comment: '' });
+    setFormData({ company: '', inn: '', revenue: '', marketplaces: '', phone: '', email: '', comment: '' });
   };
 
   const scrollToForm = () => {
@@ -187,6 +189,19 @@ const Index = () => {
                     />
                   </div>
                   <div className="space-y-2">
+                    <Label htmlFor="inn" className="text-foreground font-medium">
+                      ИНН <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="inn"
+                      required
+                      value={formData.inn}
+                      onChange={(e) => setFormData({ ...formData, inn: e.target.value })}
+                      placeholder="1234567890"
+                      className="h-12"
+                    />
+                  </div>
+                  <div className="space-y-2">
                     <Label htmlFor="revenue" className="text-foreground font-medium">
                       Месячный оборот на маркетплейсах <span className="text-destructive">*</span>
                     </Label>
@@ -195,7 +210,7 @@ const Index = () => {
                       required
                       value={formData.revenue}
                       onChange={(e) => setFormData({ ...formData, revenue: e.target.value })}
-                      placeholder="От 3 млн рублей"
+                      placeholder="100 000 рублей"
                       className="h-12"
                     />
                   </div>
@@ -223,6 +238,20 @@ const Index = () => {
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="+7 (999) 123-45-67"
+                      className="h-12"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-foreground font-medium">
+                      Email <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="info@company.ru"
                       className="h-12"
                     />
                   </div>
