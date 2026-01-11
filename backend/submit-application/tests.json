@@ -4,13 +4,10 @@
       "name": "Valid application submission",
       "method": "POST",
       "body": {
-        "company": "ООО Тест",
+        "name": "Иванов Иван Иванович",
         "inn": "1234567890",
-        "revenue": "500000",
-        "marketplaces": "Wildberries, Ozon",
-        "phone": "+7 999 123-45-67",
-        "email": "test@example.com",
-        "comment": "Тестовая заявка"
+        "phone": "+7 (999) 123-45-67",
+        "email": "test@example.com"
       },
       "expectedStatus": 200,
       "expectedBody": {
@@ -22,7 +19,7 @@
       "name": "Missing required fields",
       "method": "POST",
       "body": {
-        "company": "ООО Тест"
+        "name": "ООО Тест"
       },
       "expectedStatus": 400,
       "expectedBody": {

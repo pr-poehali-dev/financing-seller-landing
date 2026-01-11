@@ -37,15 +37,12 @@ def handler(event: dict, context) -> dict:
     try:
         body = json.loads(event.get('body', '{}'))
         
-        company = body.get('company', '')
+        name = body.get('name', '')
         inn = body.get('inn', '')
-        revenue = body.get('revenue', '')
-        marketplaces = body.get('marketplaces', '')
         phone = body.get('phone', '')
         email = body.get('email', '')
-        comment = body.get('comment', '')
         
-        if not all([company, inn, revenue, marketplaces, phone, email]):
+        if not all([name, inn, phone, email]):
             return {
                 'statusCode': 400,
                 'headers': {
@@ -74,7 +71,7 @@ def handler(event: dict, context) -> dict:
             }
         
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = f'Новая заявка на финансирование от {company}'
+        msg['Subject'] = f'Новая заявка на финансирование от {name}'
         msg['From'] = smtp_user
         msg['To'] = recipient_email
         
@@ -103,23 +100,13 @@ def handler(event: dict, context) -> dict:
                 </div>
                 <div class="content">
                     <div class="field">
-                        <div class="field-label">Название компании</div>
-                        <div class="field-value">{company}</div>
+                        <div class="field-label">ФИО / Название компании</div>
+                        <div class="field-value">{name}</div>
                     </div>
                     
                     <div class="field">
                         <div class="field-label">ИНН</div>
                         <div class="field-value">{inn}</div>
-                    </div>
-                    
-                    <div class="field">
-                        <div class="field-label">Месячный оборот</div>
-                        <div class="field-value">{revenue}</div>
-                    </div>
-                    
-                    <div class="field">
-                        <div class="field-label">Маркетплейсы</div>
-                        <div class="field-value">{marketplaces}</div>
                     </div>
                     
                     <div class="field">
@@ -131,8 +118,6 @@ def handler(event: dict, context) -> dict:
                         <div class="field-label">Email</div>
                         <div class="field-value">{email}</div>
                     </div>
-                    
-                    {f'<div class="field"><div class="field-label">Комментарий</div><div class="field-value">{comment}</div></div>' if comment else ''}
                     
                     <div class="footer">
                         Заявка отправлена автоматически через форму на сайте
