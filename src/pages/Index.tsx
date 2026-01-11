@@ -62,8 +62,16 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground">
+      <section className="relative bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:32px_32px]" />
+        {/* Marketplace logos background */}
+        <div className="absolute inset-0 opacity-[0.03]">
+          <img src="https://cdn.poehali.dev/projects/a75355f8-3aae-423d-8a7d-1f12f2402e75/files/a27c2159-8597-4de6-8e6c-00ffbfa301c4.jpg" alt="" className="absolute top-[10%] left-[5%] w-32 h-32 object-contain animate-float" />
+          <img src="https://cdn.poehali.dev/projects/a75355f8-3aae-423d-8a7d-1f12f2402e75/files/fad50a35-57e8-47c5-8628-9fd75684a90c.jpg" alt="" className="absolute top-[60%] left-[15%] w-40 h-40 object-contain animate-float" style={{ animationDelay: '1s' }} />
+          <img src="https://cdn.poehali.dev/projects/a75355f8-3aae-423d-8a7d-1f12f2402e75/files/76632e36-58cb-4960-85bf-d75a27b2266a.jpg" alt="" className="absolute top-[30%] right-[10%] w-36 h-36 object-contain animate-float" style={{ animationDelay: '2s' }} />
+          <img src="https://cdn.poehali.dev/projects/a75355f8-3aae-423d-8a7d-1f12f2402e75/files/a27c2159-8597-4de6-8e6c-00ffbfa301c4.jpg" alt="" className="absolute bottom-[20%] right-[20%] w-28 h-28 object-contain animate-float" style={{ animationDelay: '0.5s' }} />
+          <img src="https://cdn.poehali.dev/projects/a75355f8-3aae-423d-8a7d-1f12f2402e75/files/fad50a35-57e8-47c5-8628-9fd75684a90c.jpg" alt="" className="absolute top-[15%] right-[30%] w-32 h-32 object-contain animate-float" style={{ animationDelay: '1.5s' }} />
+        </div>
         <div className="relative container mx-auto px-4 py-24 md:py-32">
           <div className="max-w-3xl animate-fade-in">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
